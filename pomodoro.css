@@ -1,0 +1,17 @@
+body {
+	font-family: Helvetica, Arial, sans-serif
+}
+#clock {
+	font-size: 12em;
+}
+#desc {
+	padding: 30px 0;
+	font-size: 2em;
+}
+#container {
+	margin: 0 auto;
+	width: 760px;
+}
+#clock, #desc, #pomodoros {
+	text-align: center;
+}
