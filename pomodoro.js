@@ -11,7 +11,7 @@ $(function(){
 
 	timer = function(minutes) {
 
-		state.counter = 1*minutes/5;
+		state.counter = 60000*minutes;
 		clearInterval(state.interval);
 
 		setClock(state.counter);
