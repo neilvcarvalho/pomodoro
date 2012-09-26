@@ -9,9 +9,9 @@ $(function(){
 		pomodoros: 0
 	};
 
-	timer = function(minutes) {
+	start_timer = function(minutes) {
 
-		state.counter = 60000*minutes;
+		state.counter = (typeof minutes == 'undefined' ? state.counter : 60000*minutes);
 		clearInterval(state.interval);
 
 		setClock(state.counter);
@@ -52,20 +52,36 @@ $(function(){
 		$('#clock').text(minutes + ':' + seconds);
 	};
 
+	reset_timer = function () {
+		if (state.current_timer == 'pomodoro') {
+			pomodoro();
+		} if (state.current_timer == 'small_break') {
+			small_break();
+		} if (state.current_timer == 'long_break') {
+			long_break();
+		}
+	}
+
+	stop_timer = function() {
+		clearInterval(state.interval);
+		state.counter = 0;
+		setClock(0);
+	}
+
 	pomodoro    = function() {
 		$('#pomodoros').text('Pomodoros: ' + state.pomodoros);
 		state.current_timer = 'pomodoro';
 		$('#desc').text('Work!');
-		timer(25);
+		start_timer(25);
 	}
 	long_break  = function() {
 		state.current_timer = 'long_break';
 		$('#desc').text('Long break');
-		timer(15);
+		start_timer(15);
 	}
 	small_break = function() {
 		state.current_timer = 'small_break';
 		$('#desc').text('Break');
-		timer(5);
+		start_timer(5);
 	}
 });
