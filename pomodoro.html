@@ -4,22 +4,23 @@
 	<link rel="stylesheet" type="text/css" href="pomodoro.css">
 </head>
 <body>
-	<div id="container">
+	<div class="container">
 		<nav id="timers">
-			<ul>
-				<li><a href="javascript:pomodoro();">Pomodoro!</a></li>
-				<li><a href="javascript:small_break();">Small break</a></li>
-				<li><a href="javascript:long_break();">Long break</a></li>
+			<ul class="nav nav-pills">
+				<li id="pomodoro" class="active"><a href="javascript:pomodoro();">Pomodoro!</a></li>
+				<li id="small_break"><a href="javascript:small_break();">Small break</a></li>
+				<li id="long_break"><a href="javascript:long_break();">Long break</a></li>
 			</ul>
 		</nav>
-		<div id="desc"></div>
-		<div id="pomodoros"></div>
-		<div id="clock"></div>
+		<div id="desc">&nbsp;</div>
+		<div id="pomodoros">Pomodoros: 0</div>
+		<h1 id="clock">25:00</h1>
 		<nav id="actions">
 			<ul>
-				<li><a href="javascript:stop_timer();">Stop</a></li>
-				<li><a href="javascript:reset_timer();">Reset</a></li>
-			</ul>
+				<li id="stop_timer"><a href="javascript:stop_timer()" class="btn btn-danger">Stop</a></li>
+				<li id="start_timer"><a href="javascript:start_timer();" class="btn btn-success">Start</a></li>
+				<li id="reset_timer"><a href="javascript:reset_timer()" class="btn btn-action">Reset</a></li>
+			<ul>
 		</nav>
 	</div>
 
