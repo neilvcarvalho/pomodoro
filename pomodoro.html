@@ -4,10 +4,10 @@
 	<link rel="stylesheet" type="text/css" href="pomodoro.css">
 </head>
 <body>
-	<div class="container">
+	<div id="container">
 		<nav id="timers">
-			<ul class="nav nav-pills">
-				<li id="pomodoro" class="active"><a href="javascript:pomodoro();">Pomodoro!</a></li>
+			<ul>
+				<li id="pomodoro"><a href="javascript:pomodoro();">Pomodoro!</a></li>
 				<li id="small_break"><a href="javascript:small_break();">Small break</a></li>
 				<li id="long_break"><a href="javascript:long_break();">Long break</a></li>
 			</ul>
@@ -17,9 +17,9 @@
 		<h1 id="clock">25:00</h1>
 		<nav id="actions">
 			<ul>
-				<li id="stop_timer"><a href="javascript:stop_timer()" class="btn btn-danger">Stop</a></li>
-				<li id="start_timer"><a href="javascript:start_timer();" class="btn btn-success">Start</a></li>
-				<li id="reset_timer"><a href="javascript:reset_timer()" class="btn btn-action">Reset</a></li>
+				<li id="stop_timer"><a href="javascript:stop_timer()">Stop</a></li>
+				<li id="start_timer"><a href="javascript:start_timer();">Start</a></li>
+				<li id="reset_timer"><a href="javascript:reset_timer()">Reset</a></li>
 			<ul>
 		</nav>
 	</div>
