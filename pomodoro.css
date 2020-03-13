@@ -1,21 +1,21 @@
 body {
-	font-family: Helvetica, Arial, sans-serif
+  font-family: Helvetica, Arial, sans-serif
 }
 #clock {
-	font-size: 8em;
+  font-size: 8em;
 }
 #desc {
-	padding: 30px 0;
-	font-size: 2em;
+  padding: 30px 0;
+  font-size: 2em;
 }
 #container {
-	margin: 0 auto;
-	width: 760px;
+  margin: 0 auto;
+  width: 760px;
 }
 #clock, #desc, #pomodoros {
-	text-align: center;
+  text-align: center;
 }
 
 #stop_timer {
-	display: none;
+  display: none;
 }
