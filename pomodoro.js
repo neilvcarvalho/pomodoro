@@ -149,4 +149,10 @@ $(function(){
   $("#token").on("change", function() {
     localStorage.setItem("slackToken", $(this).val());
   });
+  $("#pomodoro").on("click", function() { pomodoro() });
+  $("#small_break").on("click", function() { smallPomodoroBreak() });
+  $("#long_break").on("click", function() { longPomodoroBreak() });
+  $("#stop_timer").on("click", function() { stopPomodoroTimer() });
+  $("#start_timer").on("click", function() { startPomodoroTimer() });
+  $("#reset_timer").on("click", function() { resetPomodoroTimer() });
 });
