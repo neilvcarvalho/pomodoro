@@ -10,7 +10,6 @@ $(function(){
   };
 
   startPomodoroTimer = function(minutes) {
-
     if (typeof minutes == 'undefined') {
       resetPomodoroTimer();
       hideStartAction();
@@ -23,7 +22,6 @@ $(function(){
     setClock(state.counter);
 
     state.interval = setInterval(function(){
-
       state.counter--;
 
       if (state.counter > 0) {
@@ -95,7 +93,7 @@ $(function(){
     slackSetStatus("", "");
   }
 
-  pomodoro    = function() {
+  pomodoro = function() {
     $('#timers ul li').removeClass('active')
     $('#pomodoro').addClass('active');
     hideStartAction();
@@ -107,7 +105,7 @@ $(function(){
     startPomodoroTimer(25);
   }
 
-  longPomodoroBreak  = function() {
+  longPomodoroBreak = function() {
     $('#timers ul li').removeClass('active')
     $('#long_break').addClass('active');
     hideStartAction();
