@@ -3,7 +3,7 @@ $(function(){
 	var state = {};
 
 	state = {
-		counter: 25*60000,
+		counter: 25*60,
 		interval: undefined,
 		current_timer: 'pomodoro',
 		pomodoros: 0
@@ -15,7 +15,7 @@ $(function(){
 			reset_timer();
 			hide_start();
 		} else {
-			state.counter = 60000*minutes;
+			state.counter = 60*minutes;
 		}
 
 		clearInterval(state.interval);
@@ -49,7 +49,8 @@ $(function(){
 	}
 
 	setClock = function(counter) {
-		minutes = Math.floor(counter/1000/60);
+		console.log(counter);
+		minutes = Math.floor(counter/60);
 		seconds = counter % 60;
 
 		minutes = minutes < 10 ? "0" + minutes : minutes;
