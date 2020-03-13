@@ -9,11 +9,11 @@ $(function(){
     pomodoros: 0
   };
 
-  start_timer = function(minutes) {
+  startPomodoroTimer = function(minutes) {
 
     if (typeof minutes == 'undefined') {
-      reset_timer();
-      hide_start();
+      resetPomodoroTimer();
+      hideStartAction();
     } else {
       state.counter = 60*minutes;
     }
@@ -30,12 +30,12 @@ $(function(){
         setClock(state.counter);
       }
       else {
-        next_timer();
+        nextPomodoroTimer();
       }
     }, 1000);
   };
 
-  next_timer = function() {
+  nextPomodoroTimer = function() {
     if (state.current_timer == 'pomodoro') {
       state.pomodoros++;
       if (state.pomodoros % 4 == 0) {
@@ -58,77 +58,79 @@ $(function(){
     $('#clock').text(minutes + ':' + seconds);
   };
 
-  reset_timer = function () {
+  resetPomodoroTimer = function () {
     if (state.current_timer == 'pomodoro') {
       pomodoro();
     } if (state.current_timer == 'small_break') {
-      small_break();
+      smallPomodoroBreak();
     } if (state.current_timer == 'long_break') {
-      long_break();
+      longPomodoroBreak();
     }
   }
 
-  stop_timer = function() {
+  stopPomodoroTimer = function() {
     clearInterval(state.interval);
-    toggle_start();
+    toggleStartAction();
     $('#desc').text("\xa0");
     state.counter = 0;
-    end_dnd();
-    set_status("", "");
+    slackEndDnd();
+    slackSetStatus("", "");
     setClock(0);
   }
 
-  start_dnd = function() {
+  slackStartDnd = function() {
     $.get("https://slack.com/api/dnd.setSnooze?token=" + $("#token").val() + "&num_minutes=25&pretty=1")
   }
 
-  end_dnd = function() {
+  slackEndDnd = function() {
     $.get("https://slack.com/api/dnd.endDnd?token=" + $("#token").val() + "&pretty=1");
   }
 
-  set_status = function(status_emoji, status_text) {
-    $.post(
-      "https://slack.com/api/users.profile.set?token=" + $("#token").val() + "&profile=" + encodeURIComponent(JSON.stringify({ "status_emoji": status_emoji, "status_text": status_text })),
-    );
+  slackSetStatus = function(status_emoji, status_text) {
+    $.post("https://slack.com/api/users.profile.set?token=" + $("#token").val() + "&profile=" + encodeURIComponent(JSON.stringify({ "status_emoji": status_emoji, "status_text": status_text })));
+  }
+
+  clearSlackData = function() {
+    slackEndDnd();
+    slackSetStatus("", "");
   }
 
   pomodoro    = function() {
     $('#timers ul li').removeClass('active')
     $('#pomodoro').addClass('active');
-    hide_start();
+    hideStartAction();
     $('#pomodoros').text('Pomodoros: ' + state.pomodoros);
     state.current_timer = 'pomodoro';
     $('#desc').text('Work!');
-    start_dnd();
-    set_status(":tomato:", "Pomodoro em andamento");
-    start_timer(25);
-  }
-  long_break  = function() {
-    $('#timers ul li').removeClass('active')
-    $('#long_break').addClass('active');
-    hide_start();
-    state.current_timer = 'long_break';
-    $('#desc').text('Long break');
-    start_timer(15);
-    end_dnd();
-    set_status("", "");
-  }
-  small_break = function() {
-    $('#timers ul li').removeClass('active')
-    $('#small_break').addClass('active');
-    hide_start();
-    state.current_timer = 'small_break';
-    $('#desc').text('Break');
-    end_dnd();
-    set_status("", "");
-    start_timer(5);
+    slackStartDnd();
+    slackSetStatus(":tomato:", "Pomodoro em andamento");
+    startPomodoroTimer(25);
   }
 
-  toggle_start = function() {
+  longPomodoroBreak  = function() {
+    $('#timers ul li').removeClass('active')
+    $('#long_break').addClass('active');
+    hideStartAction();
+    state.current_timer = 'long_break';
+    $('#desc').text('Long break');
+    startPomodoroTimer(15);
+    clearSlackData();
+  }
+  smallPomodoroBreak = function() {
+    $('#timers ul li').removeClass('active')
+    $('#small_break').addClass('active');
+    hideStartAction();
+    state.current_timer = 'small_break';
+    $('#desc').text('Break');
+    clearSlackData();
+    startPomodoroTimer(5);
+  }
+
+  toggleStartAction = function() {
     $('#start_timer').toggle();
     $('#stop_timer').toggle();
   }
-  hide_start = function() {
+  hideStartAction = function() {
     $('#start_timer').hide();
     $('#stop_timer').show();
   }
