@@ -11,7 +11,7 @@
       <ul>
         <li id="pomodoro"><a href="javascript:pomodoro();">Pomodoro!</a></li>
         <li id="small_break"><a href="javascript:smallPomodoroBreak();">Small break</a></li>
-        <li id="long_break"><a href="javascript:longBreak();">Long break</a></li>
+        <li id="long_break"><a href="javascript:longPomodoroBreak();">Long break</a></li>
       </ul>
     </nav>
     <div id="desc">&nbsp;</div>
@@ -25,8 +25,9 @@
       <ul>
     </nav>
 
-    <label for="token">Slack token:</label>
-    <input type="text" id="token" name="token">
+    <label for="token">Slack tokens (one per line)</label>
+    <textarea name="token" id="token" cols="75" rows="5"></textarea>
+    <p>Issue your token <a href="https://api.slack.com/legacy/custom-integrations/legacy-tokens" target="_blank">here</a></p>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

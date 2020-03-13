@@ -9,6 +9,8 @@ $(function(){
     pomodoros: 0
   };
 
+  $("#token").val(localStorage.getItem("slackToken"));
+
   startPomodoroTimer = function(minutes) {
     if (typeof minutes == 'undefined') {
       resetPomodoroTimer();
@@ -37,9 +39,9 @@ $(function(){
     if (state.current_timer == 'pomodoro') {
       state.pomodoros++;
       if (state.pomodoros % 4 == 0) {
-        long_break();
+        longPomodoroBreak();
       } else {
-        small_break();
+        smallPomodoroBreak();
       }
     } else {
       pomodoro();
@@ -77,15 +79,21 @@ $(function(){
   }
 
   slackStartDnd = function() {
-    $.get("https://slack.com/api/dnd.setSnooze?token=" + $("#token").val() + "&num_minutes=25&pretty=1")
+    $.each(tokens(), function(index, token) {
+      $.get("https://slack.com/api/dnd.setSnooze?token=" + token + "&num_minutes=25&pretty=1")
+    })
   }
 
   slackEndDnd = function() {
-    $.get("https://slack.com/api/dnd.endDnd?token=" + $("#token").val() + "&pretty=1");
+    $.each(tokens(), function(index, token) {
+      $.get("https://slack.com/api/dnd.endDnd?token=" + token + "&pretty=1");
+    });
   }
 
   slackSetStatus = function(status_emoji, status_text) {
-    $.post("https://slack.com/api/users.profile.set?token=" + $("#token").val() + "&profile=" + encodeURIComponent(JSON.stringify({ "status_emoji": status_emoji, "status_text": status_text })));
+    $.each(tokens(), function(index, token) {
+      $.post("https://slack.com/api/users.profile.set?token=" + token + "&profile=" + encodeURIComponent(JSON.stringify({ "status_emoji": status_emoji, "status_text": status_text })));
+    });
   }
 
   clearSlackData = function() {
@@ -128,8 +136,17 @@ $(function(){
     $('#start_timer').toggle();
     $('#stop_timer').toggle();
   }
+
   hideStartAction = function() {
     $('#start_timer').hide();
     $('#stop_timer').show();
   }
+
+  tokens = function() {
+    return $("#token").val().split(/\r|\r\n|\n/)
+  }
+
+  $("#token").on("change", function() {
+    localStorage.setItem("slackToken", $(this).val());
+  });
 });
