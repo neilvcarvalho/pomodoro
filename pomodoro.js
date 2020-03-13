@@ -74,6 +74,7 @@ $(function(){
     $('#desc').text("\xa0");
     state.counter = 0;
     end_dnd();
+    set_status("", "");
     setClock(0);
   }
 
@@ -85,6 +86,12 @@ $(function(){
     $.get("https://slack.com/api/dnd.endDnd?token=" + $("#token").val() + "&pretty=1");
   }
 
+  set_status = function(status_emoji, status_text) {
+    $.post(
+      "https://slack.com/api/users.profile.set?token=" + $("#token").val() + "&profile=" + encodeURIComponent(JSON.stringify({ "status_emoji": status_emoji, "status_text": status_text })),
+    );
+  }
+
   pomodoro    = function() {
     $('#timers ul li').removeClass('active')
     $('#pomodoro').addClass('active');
@@ -93,6 +100,7 @@ $(function(){
     state.current_timer = 'pomodoro';
     $('#desc').text('Work!');
     start_dnd();
+    set_status(":tomato:", "Pomodoro em andamento");
     start_timer(25);
   }
   long_break  = function() {
@@ -103,6 +111,7 @@ $(function(){
     $('#desc').text('Long break');
     start_timer(15);
     end_dnd();
+    set_status("", "");
   }
   small_break = function() {
     $('#timers ul li').removeClass('active')
@@ -111,6 +120,7 @@ $(function(){
     state.current_timer = 'small_break';
     $('#desc').text('Break');
     end_dnd();
+    set_status("", "");
     start_timer(5);
   }
 
